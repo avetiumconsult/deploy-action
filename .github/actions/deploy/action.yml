@@ -42,24 +42,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: setup deploy stack vars
-      shell: bash
-      run: |
-        mkdir -p "$HOME/.ssh"
-        KEY_FILE="$HOME/.ssh/id_ed25519"
-
-        echo "${{ inputs.ssh-key }}" > "$KEY_FILE"
-
-        echo "SSH_KEY_FILE=$KEY_FILE" >> "$GITHUB_ENV"
-
-        chmod 400 "$KEY_FILE"
-  
     - name: Login to GitHub Container Registry
       uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
       with:
         registry: ${{ inputs.docker-registry }}
         username: ${{ inputs.docker-username }}
         password: ${{ inputs.docker-password }}
+
     - name: deploy stack
       shell: bash
       run: |
