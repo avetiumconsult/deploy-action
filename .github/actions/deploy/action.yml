@@ -32,6 +32,10 @@ inputs:
   docker-password:
     description: 'Docker registry password'
     required: true  
+  detach:
+    description: 'Detach mode for stack deploy'
+    required: false
+    default: "false"
   
 
      
@@ -77,6 +81,6 @@ runs:
         --opt encrypted \
         ${STACK}_infra-net
         docker network ls
-        docker stack deploy --with-registry-auth -c "${{ inputs.docker-stack-file }}" "${STACK}"
+        docker stack deploy --detach="${{ inputs.detach }}" --with-registry-auth -c "${{ inputs.docker-stack-file }}" "${STACK}"
         docker stack ls
         docker stack ps "${STACK}"
