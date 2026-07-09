@@ -83,4 +83,4 @@ runs:
         docker network ls
         docker stack deploy --detach="${{ inputs.detach }}" --with-registry-auth -c "${{ inputs.docker-stack-file }}" "${STACK}"
         docker stack ls
-        docker stack ps "${STACK}"
+        docker stack ps "${STACK}" --no-trunc
